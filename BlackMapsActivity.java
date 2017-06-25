@@ -25,10 +25,10 @@ import com.google.android.gms.maps.model.Marker;
 
 public class BlackMapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
-    Marker gandhi = null;
+    Marker film = null;
     Marker museum = null;
-    Marker strike = null;
-    Marker suffrage = null;
+    Marker riot = null;
+    Marker harlem = null;
 
     private GoogleMap mMap;
     private int zoomAmount = 10;
@@ -64,44 +64,44 @@ public class BlackMapsActivity extends FragmentActivity implements OnMapReadyCal
        HISTORICAL
      */
 
-        LatLng strikeLoc = new LatLng(40.7323, -73.9964);
-        strike = mMap.addMarker(new MarkerOptions()
-                .position(strikeLoc)
-                .title("Women's Strike For Equality (1970)")
-                .snippet("Click for more info.")
-                .icon(getMarkerIcon("#3B2ED2"))
+        LatLng riotLoc = new LatLng(40.809678, -73.952562);
+        riot = mMap.addMarker(new MarkerOptions()
+                .position(riotLoc)
+                .title("New York Race Riots (1964)")
+                .snippet("Click to learn more.")
+                .icon(getMarkerIcon("#FC0000"))
         );
-        strike.setTag(0);
+        riot.setTag(0);
 
-        LatLng suffrageLoc = new LatLng(40.73466, -73.9946);
-        suffrage = mMap.addMarker(new MarkerOptions()
-                .position(suffrageLoc)
-                .title("Women March For Suffrage (1915)")
-                .snippet("Click for more info.")
-                .icon(getMarkerIcon("#3B2ED2"))
+        LatLng harlemLoc = new LatLng(40.817349, -73.947231);
+        harlem = mMap.addMarker(new MarkerOptions()
+                .position(harlemLoc)
+                .title("The Harlem Renaissance (1917-1935)")
+                .snippet("Click to learn more.")
+                .icon(getMarkerIcon("#FC0000"))
         );
-        suffrage.setTag(0);
+        harlem.setTag(0);
 
 
     /*
        CURRENT
      */
 
-        LatLng gandhiLoc = new LatLng(40.7729, -73.9701);
-        gandhi = mMap.addMarker(new MarkerOptions()
-                .position(gandhiLoc)
-                .title("Madame Gandhi at Basement Bhangra")
-                .snippet("Click for more info.")
-                .icon(getMarkerIcon("#C43693"))
+        LatLng filmLoc = new LatLng(40.671458, -73.963609);
+        film = mMap.addMarker(new MarkerOptions()
+                .position(filmLoc)
+                .title("Black Queer Brooklyn on Film")
+                .snippet("Click to learn more.")
+                .icon(getMarkerIcon("#FCF900"))
         );
-        gandhi.setTag(0);
+        film.setTag(0);
 
-        LatLng museumLoc = new LatLng(40.66435, -73.9529);
+        LatLng museumLoc = new LatLng(40.808461, -73.947743);
         museum = mMap.addMarker(new MarkerOptions()
                 .position(museumLoc)
-                .title("Museum of Women's Resistance")
-                .snippet("Click for more info.")
-                .icon(getMarkerIcon("#C43693"))
+                .title("Studio Museum in Harlem")
+                .snippet("Click to learn more.")
+                .icon(getMarkerIcon("#FCF900"))
 
         );
         museum.setTag(0);
@@ -150,42 +150,40 @@ public class BlackMapsActivity extends FragmentActivity implements OnMapReadyCal
     public void onInfoWindowClick(Marker marker) {
         //Toast.makeText(this, "Info window clicked", Toast.LENGTH_SHORT).show();
 
-        createBlurb(marker, gandhi, "Madame Gandhi at the Basement Bhangra 20th Anniversary Party",
-                "Madame Gandhi is a DJ and activist whose music promotes female " +
-                        "empowerment and raises awareness of gender equality issues, known for songs " +
-                        "including \"Her\" and \"The Future is Female\". She and other " +
-                        "select artists will be performing live for Basement Bhangra's 20th " +
-                        "Anniversary.",
-                "http://www.cityparksfoundation.org/event/basement-bhangra-" +
-                        "20th-anniversary-apache-indian-panjabi-mc-dj-rekha-madame-gandhi-anik-khan-" +
-                        "horsepowar-sikh-knowledge-dj-petra-dj-shilpa/");
+        createBlurb(marker, film, "Black Queer Brooklyn on Film",
+                "Black Queer Brooklyn on Film is an event bringing together those of African" +
+                        "descent and those who identify as LGBTQ in a film festival that celebrates" +
+                        "art and film. Young African American LGBTQ artists in Brooklyn come to " +
+                        "exhibit their works of art at the Brooklyn Museum. It is important for " +
+                        "people of color who also identify as LGBTQ to come together and connect.",
+                "http://gomag.com/event/black-queer-brooklyn-film/");
 
-        createBlurb(marker, museum, "Museum of Women's Resistance",
-                "The Museum of Women's Resistance (MoWRe) is a museum " +
-                        "that brings awareness to the diversity and influence of women of African " +
-                        "descent. MoWRe promotes the intersectionality of a wide array of social aspects, " +
-                        "including race, social status, gender, and culture in relation to women all around" +
-                        " the world. MoWRe hosts a number of exhibits and programs showcasing African literature and" +
-                        " oral tradition.",
-                "http://www.museumofwomensresistance.org/");
+        createBlurb(marker, museum, "Studio Museum in Harlem",
+                "The Studio Museum in Harlem was founded in 1968 by a group of artists and activists. " +
+                        "They envisioned a place that supported African American arts and culture. " +
+                        "The museum focuses on promoting works by artists of African and Latino descent, " +
+                        "bridging together artists and the public. The Studio Museum seeks to expand our " +
+                        "society's perception of modern and contemporary art by those of African descent. "+
+                        "The museum carries nearly 2,000 pieces of art, so be sure to visit and learn!",
+                "https://www.studiomuseum.org/");
 
-        createBlurb(marker, strike, "Women's Strike For Equality (1970)",
-                "(August 26, 1970) The Women's Strike For Equality marked the 50th anniversary of the " +
-                        "passage of the 19th Amendment, or the woman's right to vote. Women stopped " +
-                        "their work and took to Fifth Avenue to march in the name of women's rights. " +
-                        "Women of all backgrounds and male allies unified to promote issues such as " +
-                        "women's health, the pay gap, and child care.",
-                "http://time.com/4008060/women-strike-equality-1970/");
+        createBlurb(marker, riot, "New York Race Riots (1964)",
+                "(July 18, 1964) The New York Race Riots of 1964 led the series of race riots through America. " +
+                        "The riots began when a teenager James Powell was shot to death by a white officer. " +
+                        "Around 8,000 people from Harlem launched a large riot to express their discontent. " +
+                        "The race riots, although violent, showed the racial injustive and civil unrest that " +
+                        "was pervasive throughout the cites and that reform was needed soon.",
+                "http://crdl.usg.edu/events/ny_race_riots/?Welcome");
 
-        createBlurb(marker, suffrage, "Women March For Suffrage (1915)",
-                "(October 23, 1915) Preceding the passage of the 19th Amendment in 1920, NYC women " +
-                        "dressed in white gathered with their children to fight for the right to vote, " +
-                        "despite not being taken seriously by traditionalists. More than 25,000 women, " +
-                        "hands locked together, paraded down Fifth Avenue wearing flowers and waving " +
-                        "banners. This event changed the perception of the women's suffrage parades, " +
-                        "from what had been viewed as silly spectacles, to respected and serious " +
-                        "demonstrations.",
-                "http://time.com/4081629/suffrage-parade-1915/");
+        createBlurb(marker, harlem, "The Harlem Renaissance (1917-1935)",
+                "(1917-1935) The Harlem Renaissance was a cultural and artistic explosion after the end of WWI. " +
+                        "During this period, numerous black writers, artists, and musicians expressed their  " +
+                        "talent and gained recognition across the world. Langston Hughes, Zora Neal Hurston, and " +
+                        "Claude McKay were among the new talents. This explosion began when many " +
+                        "African Americans fled the oppressive South to the Northern cities. " +
+                        "banners. From this movement flourished racial pride and promoted interracial acceptance " +
+                        "of civil rights.",
+                "http://www.pbs.org/wnet/jimcrow/stories_events_harlem.html");
 
     }
 

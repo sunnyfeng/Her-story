@@ -25,13 +25,14 @@ import com.google.android.gms.maps.model.Marker;
 
 public class GayMapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
-  Marker gandhi = null;
-  Marker museum = null;
-  Marker strike = null;
-  Marker suffrage = null;
+  Marker march = null;
+  Marker cent = null;
+  Marker storme = null;
+  Marker stone = null;
+  Marker fire = null;
 
   private GoogleMap mMap;
-  private int zoomAmount = 10;
+  private int zoomAmount = 11;
   private LatLngBounds NYC = new LatLngBounds(new LatLng(40.5,-75), new LatLng(41, -73));
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,47 +64,58 @@ public class GayMapsActivity extends FragmentActivity implements OnMapReadyCallb
        HISTORICAL
      */
 
-        LatLng strikeLoc = new LatLng(40.7323,-73.9964);
-        strike = mMap.addMarker(new MarkerOptions()
-                .position(strikeLoc)
-                .title("Women's Strike For Equality (1970)")
-                .snippet("Click for more info.")
-                .icon(getMarkerIcon("#3B2ED2"))
+        LatLng stoneLoc = new LatLng(40.734028,-74.002152);
+        stone = mMap.addMarker(new MarkerOptions()
+                .position(stoneLoc)
+                .title("Stonewall Inn (1969)")
+                .snippet("Click to learn more.")
+                .icon(getMarkerIcon("#FC9D00"))
         );
-        strike.setTag(0);
+        stone.setTag(0);
 
-        LatLng suffrageLoc = new LatLng(40.73466,-73.9946);
-        suffrage = mMap.addMarker(new MarkerOptions()
-                .position(suffrageLoc)
-                .title("Women March For Suffrage (1915)")
-                .snippet("Click for more info.")
-                .icon(getMarkerIcon("#3B2ED2"))
+        LatLng fireLoc = new LatLng(40.724822,-74.001054);
+        fire = mMap.addMarker(new MarkerOptions()
+                .position(fireLoc)
+                .title("Gay Activists Alliance Firehouse (1971-4)")
+                .snippet("Click to learn more.")
+                .icon(getMarkerIcon("#FC9D00"))
         );
-        suffrage.setTag(0);
+        fire.setTag(0);
 
 
     /*
        CURRENT
      */
 
-        LatLng gandhiLoc = new LatLng(40.7729,-73.9701);
-        gandhi = mMap.addMarker(new MarkerOptions()
-                .position(gandhiLoc)
-                .title("Madame Gandhi at Basement Bhangra")
-                .snippet("Click for more info.")
-                .icon(getMarkerIcon("#C43693"))
+        LatLng marchLoc = new LatLng(40.749981,-73.983682);
+        march = mMap.addMarker(new MarkerOptions()
+                .position(marchLoc)
+                .title("NYC Pride March")
+                .snippet("Click to learn more.")
+                .icon(getMarkerIcon("#ADE0FD"))
         );
-        gandhi.setTag(0);
+        march.setTag(0);
 
-        LatLng museumLoc = new LatLng(40.66435, -73.9529);
-        museum = mMap.addMarker(new MarkerOptions()
-                .position(museumLoc)
-                .title("Museum of Women's Resistance")
-                .snippet("Click for more info.")
-                .icon(getMarkerIcon("#C43693"))
+        LatLng centLoc = new LatLng(40.738077, -74.001016);
+        cent = mMap.addMarker(new MarkerOptions()
+                .position(centLoc)
+                .title("LGBT Community Center")
+                .snippet("Click to learn more.")
+                .icon(getMarkerIcon("#ADE0FD"))
 
         );
-        museum.setTag(0);
+        cent.setTag(0);
+
+        LatLng stoLoc = new LatLng(40.753247, -73.982039);
+        storme = mMap.addMarker(new MarkerOptions()
+                .position(stoLoc)
+                .title("The Storme DeLarverie Papers")
+                .snippet("Click to learn more.")
+                .icon(getMarkerIcon("#ADE0FD"))
+
+        );
+        storme.setTag(0);
+
 
         //zooming
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(NYC.getCenter(),zoomAmount));
@@ -149,42 +161,45 @@ public class GayMapsActivity extends FragmentActivity implements OnMapReadyCallb
     public void onInfoWindowClick(Marker marker){
         //Toast.makeText(this, "Info window clicked", Toast.LENGTH_SHORT).show();
 
-        createBlurb(marker,gandhi, "Madame Gandhi at the Basement Bhangra 20th Anniversary Party",
-                "Madame Gandhi is a DJ and activist whose music promotes female " +
-                        "empowerment and raises awareness of gender equality issues, known for songs " +
-                        "including \"Her\" and \"The Future is Female\". She and other " +
-                        "select artists will be performing live for Basement Bhangra's 20th " +
-                        "Anniversary.",
-                "http://www.cityparksfoundation.org/event/basement-bhangra-" +
-                        "20th-anniversary-apache-indian-panjabi-mc-dj-rekha-madame-gandhi-anik-khan-" +
-                        "horsepowar-sikh-knowledge-dj-petra-dj-shilpa/");
+        createBlurb(marker, march, "NYC Pride March",
+                "Commemorating the 1969 Stonewall Riots, the annual NYC Pride March " +
+                        "celebrates LGBTQ+ pride by inspiring people and educating about LGBTQ+ rights. " +
+                        "It promotes equality and has come to be a part of an event-filled week called " +
+                        "Pride Week.",
+                "http://www.nycpride.org/events/the-march/");
 
-        createBlurb(marker,museum, "Museum of Women's Resistance",
-                "The Museum of Women's Resistance (MoWRe) is a museum " +
-                        "that brings awareness to the diversity and influence of women of African " +
-                        "descent. MoWRe promotes the intersectionality of a wide array of social aspects, " +
-                        "including race, social status, gender, and culture in relation to women all around" +
-                        " the world. MoWRe hosts a number of exhibits and programs showcasing African literature and" +
-                        " oral tradition.",
-                "http://www.museumofwomensresistance.org/");
+        createBlurb(marker, cent, "The LGBT Community Center",
+                "Organized in 1983, the Lesbian, Gay, Bisexual & Transgender (LGBT) Community Center is a center that " +
+                        "promotes the wellbeing of NYC's LGBTQ+ community. It hosts health programs, " +
+                        "holds events for the arts and culture, and offers family support services. It " +
+                        "serves as a local resource aiming to empower and unite LGBT people.",
+                "http://gaycenter.org/about");
 
-        createBlurb(marker,strike, "Women's Strike For Equality (1970)",
-                "(August 26, 1970) The Women's Strike For Equality marked the 50th anniversary of the " +
-                        "passage of the 19th Amendment, or the woman's right to vote. Women stopped " +
-                        "their work and took to Fifth Avenue to march in the name of women's rights. " +
-                        "Women of all backgrounds and male allies unified to promote issues such as " +
-                        "women's health, the pay gap, and child care.",
-                "http://time.com/4008060/women-strike-equality-1970/");
+        createBlurb(marker, storme, "The Storme DeLarverie Papers",
+                "Born in 1920 to an African-American mother and white father, Storme DeLarverie would become " +
+                        "known widely as a performer, male impersonator, and gay civil rights activist. DeLarvarie is " +
+                        "said to have thrown the first punch at the infamous Stonewall Riots, and continued " +
+                        "advocating the LGBT movement throughout her life. The New York Public Library is currently " +
+                        "holding a collection of her belongings, inclusive of journals, awards, and clothes.",
+                "https://www.nypl.org/blog/2017/06/23/lgbt-icon-storme?utm_source=feedburner&utm_medium" +
+                        "=feed&utm_campaign=Feed%3A+NYPLAIIBlogs+%28NYPL+Blogs%29");
 
-        createBlurb(marker,suffrage, "Women March For Suffrage (1915)",
-                "(October 23, 1915) Preceding the passage of the 19th Amendment in 1920, NYC women " +
-                        "dressed in white gathered with their children to fight for the right to vote, " +
-                        "despite not being taken seriously by traditionalists. More than 25,000 women, " +
-                        "hands locked together, paraded down Fifth Avenue wearing flowers and waving " +
-                        "banners. This event changed the perception of the women's suffrage parades, " +
-                        "from what had been viewed as silly spectacles, to respected and serious " +
-                        "demonstrations.",
-                "http://time.com/4081629/suffrage-parade-1915/");
+        createBlurb(marker, stone, "Stonewall Inn (1969)",
+                "(June 1969) Cited as one of the most important events in American LGBT history, the " +
+                        "Stonewall Riots took place at the Stonewall Inn in 1969. On June 28th, police raided an " +
+                        "underground gay bar in Greenwich Village, sparking strong backlash from the LGBT community that" +
+                        " lasted five days. This uprising set in motion a long and continuous series of events " +
+                        "contributing to the Gay Liberation Movement and LGBT pride movement. It continues to " +
+                        "inspire today, its influence most notably seen in the annual pride parade.",
+                "http://www.hisstory.com/this-day-in-history/the-stonewall-riot/");
+
+        createBlurb(marker, fire, "Gay Activists Alliance Firehouse (1971-4)",
+                "(1971-1974) From 1971 to 1974, the Gay Activists Alliance (GAA) held headquarters at what " +
+                        "then used to be a firehouse. The GAA formed in 1969, comprised of former Gay Liberation " +
+                        "Front (GFL) members who did not align with the GFL's broad and radical ways, but stood by its " +
+                        "ideals about supporting LGBT rights. In a more focused approach, the GAA put all of its " +
+                        "efforts toward this cause.",
+                "web-static.nypl.org/exhibitions/1969/alliance.html");
 
     }
 

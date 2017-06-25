@@ -1,10 +1,18 @@
 package com.example.sunnyfeng.nycforall;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -22,9 +30,12 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Marker;
 
+import java.util.List;
+
 public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     Marker gandhi = null;
     Marker museum = null;
+    Marker postwar = null;
     Marker strike = null;
     Marker suffrage = null;
 
@@ -32,6 +43,7 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
     private int zoomAmount = 10;
     private LatLngBounds NYC = new LatLngBounds(
             new LatLng(40.5,-75), new LatLng(41, -73));
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +56,8 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
 
     }
+
+
 
 
     /**
@@ -59,6 +73,7 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+
         /*
            HISTORICAL
          */
@@ -67,8 +82,8 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
         strike = mMap.addMarker(new MarkerOptions()
                 .position(strikeLoc)
                 .title("Women's Strike For Equality (1970)")
-                .snippet("Click for more info.")
-                .icon(getMarkerIcon("#3B2ED2"))
+                .snippet("Click to learn more.")
+                .icon(getMarkerIcon("#101AED"))
         );
         strike.setTag(0);
 
@@ -76,8 +91,8 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
         suffrage = mMap.addMarker(new MarkerOptions()
                 .position(suffrageLoc)
                 .title("Women March For Suffrage (1915)")
-                .snippet("Click for more info.")
-                .icon(getMarkerIcon("#3B2ED2"))
+                .snippet("Click to learn more.")
+                .icon(getMarkerIcon("#101AED"))
         );
         suffrage.setTag(0);
 
@@ -90,7 +105,7 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
         gandhi = mMap.addMarker(new MarkerOptions()
                 .position(gandhiLoc)
                 .title("Madame Gandhi at Basement Bhangra")
-                .snippet("Click for more info.")
+                .snippet("Click to learn more.")
                 .icon(getMarkerIcon("#C43693"))
         );
         gandhi.setTag(0);
@@ -99,11 +114,21 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
         museum = mMap.addMarker(new MarkerOptions()
                 .position(museumLoc)
                 .title("Museum of Women's Resistance")
-                .snippet("Click for more info.")
+                .snippet("Click to learn more.")
                 .icon(getMarkerIcon("#C43693"))
 
         );
         museum.setTag(0);
+
+        LatLng postLoc = new LatLng(40.761498, -73.977150);
+        postwar = mMap.addMarker(new MarkerOptions()
+                .position(postLoc)
+                .title("Making Space: Women Artists and Postwar Abstraction")
+                .snippet("Click to learn more.")
+                .icon(getMarkerIcon("#C43693"))
+
+        );
+        postwar.setTag(0);
 
         //zooming
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(NYC.getCenter(),zoomAmount));
@@ -149,9 +174,9 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
     public void onInfoWindowClick(Marker marker){
         //Toast.makeText(this, "Info window clicked", Toast.LENGTH_SHORT).show();
 
-        createBlurb(marker,gandhi, "Madame Gandhi at the Basement Bhangra 20th Anniversary Party",
+        createBlurb(marker, gandhi, "Madame Gandhi at the Basement Bhangra 20th Anniversary Party",
                  "Madame Gandhi is a DJ and activist whose music promotes female " +
-                     "empowerment and raises awareness of gender equality issues, known for songs " +
+                     "empowerment and raises awareness of gender equality issues. She is known for songs " +
                      "including \"Her\" and \"The Future is Female\". She and other " +
                      "select artists will be performing live for Basement Bhangra's 20th " +
                      "Anniversary.",
@@ -159,7 +184,7 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
                       "20th-anniversary-apache-indian-panjabi-mc-dj-rekha-madame-gandhi-anik-khan-" +
                       "horsepowar-sikh-knowledge-dj-petra-dj-shilpa/");
 
-        createBlurb(marker,museum, "Museum of Women's Resistance",
+        createBlurb(marker, museum, "Museum of Women's Resistance",
                 "The Museum of Women's Resistance (MoWRe) is a museum " +
                         "that brings awareness to the diversity and influence of women of African " +
                         "descent. MoWRe promotes the intersectionality of a wide array of social aspects, " +
@@ -168,7 +193,14 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
                         " oral tradition.",
                 "http://www.museumofwomensresistance.org/");
 
-        createBlurb(marker,strike, "Women's Strike For Equality (1970)",
+        createBlurb(marker, postwar, "Making Space: Women Artists and Postwar Abstraction",
+                "Making Space: Women Artists and Postwar Abstraction is an art collection currently being hosted " +
+                        "at the Museum of Modern Art until August 13th, 2017. Consisting of 94 works, despite its " +
+                        "initial appearance as just another historical war exhibit, one thing stands out; none of the works " +
+                        "were created by men.",
+                "http://www.newyorker.com/goings-on-about-town/art/making-space-women-artists-and-postwar-abstraction");
+
+        createBlurb(marker, strike, "Women's Strike For Equality (1970)",
                 "(August 26, 1970) The Women's Strike For Equality marked the 50th anniversary of the " +
                         "passage of the 19th Amendment, or the woman's right to vote. Women stopped " +
                         "their work and took to Fifth Avenue to march in the name of women's rights. " +
@@ -176,7 +208,7 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
                         "women's health, the pay gap, and child care.",
                 "http://time.com/4008060/women-strike-equality-1970/");
 
-        createBlurb(marker,suffrage, "Women March For Suffrage (1915)",
+        createBlurb(marker, suffrage, "Women March For Suffrage (1915)",
                 "(October 23, 1915) Preceding the passage of the 19th Amendment in 1920, NYC women " +
                         "dressed in white gathered with their children to fight for the right to vote, " +
                         "despite not being taken seriously by traditionalists. More than 25,000 women, " +
