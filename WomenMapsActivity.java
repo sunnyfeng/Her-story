@@ -1,21 +1,30 @@
 package com.example.sunnyfeng.nycforall;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Marker;
 
-public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
+public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+    Marker gandhi = null;
+    Marker museum = null;
     private GoogleMap mMap;
     private int zoomAmount = 5;
     private LatLngBounds NYC = new LatLngBounds(
@@ -30,6 +39,7 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
 
     }
 
@@ -53,22 +63,50 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
        */
 
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(NYC.getCenter(),9));
+
+        /*
+           HISTORICAL
+         */
 
         LatLng nyc = new LatLng(40.7, -73.9);
-        Marker temp1 = mMap.addMarker(new MarkerOptions().position(nyc).title("Name of Place").snippet("The event that happened here."));
+        Marker temp1 = mMap.addMarker(new MarkerOptions()
+                .position(nyc)
+                .title("Name of Place")
+                .snippet("The event that happened here.")
+                .icon(getMarkerIcon("#7DE5F1"))
+        );
         temp1.setTag(0);
 
-        LatLng nyc1 = new LatLng(30, -73);
-        Marker temp2 = mMap.addMarker(new MarkerOptions().position(nyc1).title("Second Name of Place").snippet("The event that happened here."));
-        temp2.setTag(0);
 
-        LatLng nyc2 = new LatLng(40, -73);
-        Marker temp3 = mMap.addMarker(new MarkerOptions().position(nyc2).title("Third Name of Place").snippet("The event that happened here."));
-        temp2.setTag(0);
+        /*
+           CURRENT
+         */
 
+        LatLng gandhiLoc = new LatLng(40.7729,-73.9701);
+        gandhi = mMap.addMarker(new MarkerOptions()
+                .position(gandhiLoc)
+                .title("Madame Gandhi at Basement Bhangra")
+                .snippet("Click for more info.")
+                .icon(getMarkerIcon("#9AFFC5"))
+        );
+        gandhi.setTag(0);
+
+        LatLng museumLoc = new LatLng(40.66435, -73.9529);
+        museum = mMap.addMarker(new MarkerOptions()
+                .position(museumLoc)
+                .title("Museum of Women's Resistance")
+                .snippet("Click for more info.")
+                .icon(getMarkerIcon("#7DE5F1"))
+
+        );
+        museum.setTag(0);
+
+        //zooming
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(NYC.getCenter(),zoomAmount));
 
+        /*
+            BUTTONS
+         */
         final Button zoomIn = findViewById(R.id.plus_button);
         zoomIn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -95,8 +133,72 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(NYC.getCenter(),zoomAmount));
             }
         });
+        mMap.setOnInfoWindowClickListener(this);
     }
 
+    public BitmapDescriptor getMarkerIcon(String hexCode){
+        float[] colors = new float[3];
+        Color.colorToHSV(Color.parseColor(hexCode),colors);
+        return BitmapDescriptorFactory.defaultMarker(colors[0]);
+    }
 
+    public void onInfoWindowClick(Marker marker){
+        //Toast.makeText(this, "Info window clicked", Toast.LENGTH_SHORT).show();
+
+        if (marker.equals(gandhi)) {
+            new AlertDialog.Builder(this).setMessage("Madame Gandhi is a DJ and activist whose music promotes female " +
+                    "empowerment and raises awareness of gender equality issues, known for songs " +
+                    "including \"Her\" and \"The Future is Female\". She and other " +
+                    "select artists will be performing live for Basement Bhangra's 20th " +
+                    "Anniversary.")
+                    .setTitle("Madame Gandhi at the Basement Bhangra 20th Anniversary Party")
+                    .setCancelable(false)
+                    .setNeutralButton(android.R.string.cancel,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.cancel();
+                                }
+                            })
+                    .setPositiveButton("More Info",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    Intent intentGandhi = new Intent();
+                                    intentGandhi.setAction(Intent.ACTION_VIEW);
+                                    intentGandhi.addCategory(Intent.CATEGORY_BROWSABLE);
+                                    intentGandhi.setData(Uri.parse("http://www.cityparksfoundation.org/event/basement-bhangra-20th-anniversary-apache-indian-panjabi-mc-dj-rekha-madame-gandhi-anik-khan-horsepowar-sikh-knowledge-dj-petra-dj-shilpa/"));
+                                    startActivity(intentGandhi);
+                                }
+                            }
+                    ).show();
+        } else if (marker.equals(museum)){
+            new AlertDialog.Builder(this).setMessage("The Museum of Women's Resistance (MoWRe) is a museum " +
+                    "that brings awareness to the diversity and influence of women of African " +
+                    "descent. MoWRe promotes the intersectionality of a wide array of social aspects, " +
+                    "including race, social status, gender, and culture in relation to women all around" +
+                    " the world. MoWRe hosts a number of exhibits and programs showcasing African literature and" +
+                    " oral tradition.")
+                    .setTitle("Museum of Women's Resistance")
+                    .setCancelable(false)
+                    .setNeutralButton(android.R.string.cancel,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.cancel();
+                                }
+                            })
+                    .setPositiveButton("More Info",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    Intent intentMuseum = new Intent();
+                                    intentMuseum.setAction(Intent.ACTION_VIEW);
+                                    intentMuseum.addCategory(Intent.CATEGORY_BROWSABLE);
+                                    intentMuseum.setData(Uri.parse("http://www.museumofwomensresistance.org/"));
+                                    startActivity(intentMuseum);
+                                }
+                            }
+                    ).show();
+        }
+
+
+    }
 
 }
