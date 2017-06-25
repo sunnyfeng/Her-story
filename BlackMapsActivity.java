@@ -139,6 +139,14 @@ public class BlackMapsActivity extends FragmentActivity implements OnMapReadyCal
             }
         });
         mMap.setOnInfoWindowClickListener(this);
+
+        final Button contribute = findViewById(R.id.blackContributeButton);
+        contribute.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Toast.makeText(getApplicationContext(), "Under construction. Sorry!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public BitmapDescriptor getMarkerIcon(String hexCode) {

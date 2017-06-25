@@ -38,10 +38,10 @@
         android:id="@+id/reset_button"
         android:layout_width="40dp"
         android:layout_height="50dp"
-        android:text="ø"
-        android:textSize="24sp"
         android:layout_above="@+id/plus_button"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:text="ø"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/womenLabel"
@@ -60,5 +60,15 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="24sp"
         android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/womenContributeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contribute"
+        android:layout_alignBaseline="@+id/minus_button"
+        android:layout_alignBottom="@+id/minus_button"
+        android:layout_alignEnd="@+id/womenLabel"
+        android:layout_alignStart="@+id/womenLabel" />
 
 </RelativeLayout>

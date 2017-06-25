@@ -150,6 +150,14 @@ public class GayMapsActivity extends FragmentActivity implements OnMapReadyCallb
             }
         });
         mMap.setOnInfoWindowClickListener(this);
+
+        final Button contribute = findViewById(R.id.gayContributeButton);
+        contribute.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Toast.makeText(getApplicationContext(), "Under construction. Sorry!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public BitmapDescriptor getMarkerIcon(String hexCode){

@@ -163,6 +163,14 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
             }
         });
         mMap.setOnInfoWindowClickListener(this);
+
+        final Button contribute = findViewById(R.id.womenContributeButton);
+        contribute.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Toast.makeText(getApplicationContext(), "Under construction. Sorry!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public BitmapDescriptor getMarkerIcon(String hexCode){
@@ -218,6 +226,7 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
                         "demonstrations.",
                 "http://time.com/4081629/suffrage-parade-1915/");
 
+
     }
 
     private void createBlurb(Marker clickedMarker, Marker checkMarker, String title, String message, final String url){
@@ -244,5 +253,6 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
                     ).show();
         }
     }
+
 
 }
