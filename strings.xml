@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">NYCForAll</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="womensRights">Women\'s Rights</string>
+    <string name="gayRights">LGBTQ Rights</string>
+    <string name="blackRights">African American Rights</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_womenmaps">WomenMapsActivity</string>
+    <string name="title_activity_gaymaps">GayMapsActivity</string>
+    <string name="title_activity_blackmaps">BlackMapsActivity</string>
+    <string name="historyBlurb">Learn about the rich history of New York City\'s ongoing struggle for equal rights</string>
+</resources>

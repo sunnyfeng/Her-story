@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1"
+    android:gravity="center">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nycHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="20dp"
+                android:text="Choose your experience:"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/womenButton"
+                android:layout_width="362dp"
+                android:layout_height="121dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="0.45"
+                android:background="@color/colorButton1"
+                android:onClick="redirectToWomenMaps"
+                android:text="@string/womensRights"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/gayButton"
+                android:layout_width="362dp"
+                android:layout_height="121dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="0.50"
+                android:background="@color/colorButton2"
+                android:onClick="redirectToGayMaps"
+                android:text="@string/gayRights" />
+
+            <Button
+                android:id="@+id/blackButton"
+                android:layout_width="362dp"
+                android:layout_height="121dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="0.49"
+                android:background="@color/colorButton3"
+                android:onClick="redirectToBlackMaps"
+                android:text="@string/blackRights" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+

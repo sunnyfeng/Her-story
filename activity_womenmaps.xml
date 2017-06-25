@@ -43,4 +43,22 @@
         android:layout_above="@+id/plus_button"
         android:layout_alignParentEnd="true" />
 
+    <TextView
+        android:id="@+id/womenLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:background="@color/colorButton1"
+        android:fadingEdge="horizontal|vertical"
+        android:fontFamily="casual"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:shadowColor="@color/common_google_signin_btn_text_light_focused"
+        android:text="@string/womensRights"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
 </RelativeLayout>

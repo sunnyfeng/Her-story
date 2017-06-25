@@ -25,10 +25,13 @@ import com.google.android.gms.maps.model.Marker;
 public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
     Marker gandhi = null;
     Marker museum = null;
+    Marker strike = null;
+    Marker suffrage = null;
+
     private GoogleMap mMap;
-    private int zoomAmount = 5;
+    private int zoomAmount = 10;
     private LatLngBounds NYC = new LatLngBounds(
-            new LatLng(40,-75), new LatLng(42, -73));
+            new LatLng(40.5,-75), new LatLng(41, -73));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,6 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
 
     }
 
@@ -57,25 +59,27 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-       /* LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-       */
-
-
         /*
            HISTORICAL
          */
 
-        LatLng nyc = new LatLng(40.7, -73.9);
-        Marker temp1 = mMap.addMarker(new MarkerOptions()
-                .position(nyc)
-                .title("Name of Place")
-                .snippet("The event that happened here.")
-                .icon(getMarkerIcon("#7DE5F1"))
+        LatLng strikeLoc = new LatLng(40.7323,-73.9964);
+        strike = mMap.addMarker(new MarkerOptions()
+                .position(strikeLoc)
+                .title("Women's Strike For Equality (1970)")
+                .snippet("Click for more info.")
+                .icon(getMarkerIcon("#3B2ED2"))
         );
-        temp1.setTag(0);
+        strike.setTag(0);
+
+        LatLng suffrageLoc = new LatLng(40.73466,-73.9946);
+        suffrage = mMap.addMarker(new MarkerOptions()
+                .position(suffrageLoc)
+                .title("Women March For Suffrage (1915)")
+                .snippet("Click for more info.")
+                .icon(getMarkerIcon("#3B2ED2"))
+        );
+        suffrage.setTag(0);
 
 
         /*
@@ -87,7 +91,7 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
                 .position(gandhiLoc)
                 .title("Madame Gandhi at Basement Bhangra")
                 .snippet("Click for more info.")
-                .icon(getMarkerIcon("#9AFFC5"))
+                .icon(getMarkerIcon("#C43693"))
         );
         gandhi.setTag(0);
 
@@ -96,7 +100,7 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
                 .position(museumLoc)
                 .title("Museum of Women's Resistance")
                 .snippet("Click for more info.")
-                .icon(getMarkerIcon("#7DE5F1"))
+                .icon(getMarkerIcon("#C43693"))
 
         );
         museum.setTag(0);
@@ -145,13 +149,49 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
     public void onInfoWindowClick(Marker marker){
         //Toast.makeText(this, "Info window clicked", Toast.LENGTH_SHORT).show();
 
-        if (marker.equals(gandhi)) {
-            new AlertDialog.Builder(this).setMessage("Madame Gandhi is a DJ and activist whose music promotes female " +
-                    "empowerment and raises awareness of gender equality issues, known for songs " +
-                    "including \"Her\" and \"The Future is Female\". She and other " +
-                    "select artists will be performing live for Basement Bhangra's 20th " +
-                    "Anniversary.")
-                    .setTitle("Madame Gandhi at the Basement Bhangra 20th Anniversary Party")
+        createBlurb(marker,gandhi, "Madame Gandhi at the Basement Bhangra 20th Anniversary Party",
+                 "Madame Gandhi is a DJ and activist whose music promotes female " +
+                     "empowerment and raises awareness of gender equality issues, known for songs " +
+                     "including \"Her\" and \"The Future is Female\". She and other " +
+                     "select artists will be performing live for Basement Bhangra's 20th " +
+                     "Anniversary.",
+                  "http://www.cityparksfoundation.org/event/basement-bhangra-" +
+                      "20th-anniversary-apache-indian-panjabi-mc-dj-rekha-madame-gandhi-anik-khan-" +
+                      "horsepowar-sikh-knowledge-dj-petra-dj-shilpa/");
+
+        createBlurb(marker,museum, "Museum of Women's Resistance",
+                "The Museum of Women's Resistance (MoWRe) is a museum " +
+                        "that brings awareness to the diversity and influence of women of African " +
+                        "descent. MoWRe promotes the intersectionality of a wide array of social aspects, " +
+                        "including race, social status, gender, and culture in relation to women all around" +
+                        " the world. MoWRe hosts a number of exhibits and programs showcasing African literature and" +
+                        " oral tradition.",
+                "http://www.museumofwomensresistance.org/");
+
+        createBlurb(marker,strike, "Women's Strike For Equality (1970)",
+                "(August 26, 1970) The Women's Strike For Equality marked the 50th anniversary of the " +
+                        "passage of the 19th Amendment, or the woman's right to vote. Women stopped " +
+                        "their work and took to Fifth Avenue to march in the name of women's rights. " +
+                        "Women of all backgrounds and male allies unified to promote issues such as " +
+                        "women's health, the pay gap, and child care.",
+                "http://time.com/4008060/women-strike-equality-1970/");
+
+        createBlurb(marker,suffrage, "Women March For Suffrage (1915)",
+                "(October 23, 1915) Preceding the passage of the 19th Amendment in 1920, NYC women " +
+                        "dressed in white gathered with their children to fight for the right to vote, " +
+                        "despite not being taken seriously by traditionalists. More than 25,000 women, " +
+                        "hands locked together, paraded down Fifth Avenue wearing flowers and waving " +
+                        "banners. This event changed the perception of the women's suffrage parades, " +
+                        "from what had been viewed as silly spectacles, to respected and serious " +
+                        "demonstrations.",
+                "http://time.com/4081629/suffrage-parade-1915/");
+
+    }
+
+    private void createBlurb(Marker clickedMarker, Marker checkMarker, String title, String message, final String url){
+        if (clickedMarker.equals(checkMarker)) {
+            new AlertDialog.Builder(this).setMessage(message)
+                    .setTitle(title)
                     .setCancelable(false)
                     .setNeutralButton(android.R.string.cancel,
                             new DialogInterface.OnClickListener() {
@@ -162,43 +202,15 @@ public class WomenMapsActivity extends FragmentActivity implements OnMapReadyCal
                     .setPositiveButton("More Info",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
-                                    Intent intentGandhi = new Intent();
-                                    intentGandhi.setAction(Intent.ACTION_VIEW);
-                                    intentGandhi.addCategory(Intent.CATEGORY_BROWSABLE);
-                                    intentGandhi.setData(Uri.parse("http://www.cityparksfoundation.org/event/basement-bhangra-20th-anniversary-apache-indian-panjabi-mc-dj-rekha-madame-gandhi-anik-khan-horsepowar-sikh-knowledge-dj-petra-dj-shilpa/"));
-                                    startActivity(intentGandhi);
-                                }
-                            }
-                    ).show();
-        } else if (marker.equals(museum)){
-            new AlertDialog.Builder(this).setMessage("The Museum of Women's Resistance (MoWRe) is a museum " +
-                    "that brings awareness to the diversity and influence of women of African " +
-                    "descent. MoWRe promotes the intersectionality of a wide array of social aspects, " +
-                    "including race, social status, gender, and culture in relation to women all around" +
-                    " the world. MoWRe hosts a number of exhibits and programs showcasing African literature and" +
-                    " oral tradition.")
-                    .setTitle("Museum of Women's Resistance")
-                    .setCancelable(false)
-                    .setNeutralButton(android.R.string.cancel,
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    dialog.cancel();
-                                }
-                            })
-                    .setPositiveButton("More Info",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    Intent intentMuseum = new Intent();
-                                    intentMuseum.setAction(Intent.ACTION_VIEW);
-                                    intentMuseum.addCategory(Intent.CATEGORY_BROWSABLE);
-                                    intentMuseum.setData(Uri.parse("http://www.museumofwomensresistance.org/"));
-                                    startActivity(intentMuseum);
+                                    Intent intent = new Intent();
+                                    intent.setAction(Intent.ACTION_VIEW);
+                                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                                    intent.setData(Uri.parse(url));
+                                    startActivity(intent);
                                 }
                             }
                     ).show();
         }
-
-
     }
 
 }
